@@ -16,3 +16,11 @@ let file = 'README.md';
 function getFileExtension(file){
     return file.split('.').pop();
 } console.log(getFileExtension(file));
+
+//Función para obtener el contenido de un directorio
+//(imprime en consola la lista de arch de una file)
+
+
+let files = fs.readdirSync('./test');
+console.log(files);
+
