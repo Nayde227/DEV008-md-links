@@ -29,3 +29,7 @@ const path = require('path');
 
 const ruta = path.join('test','md-links.spect.js');
 console.log(ruta);
+
+//convertir ruta relativa en absoluta
+const pathResolve = path.resolve('test', 'md-links.spec.js');
+console.log(pathResolve);
