@@ -24,3 +24,8 @@ function getFileExtension(file){
 let files = fs.readdirSync('./test');
 console.log(files);
 
+//Unir dos segmentos de rutas 
+const path = require('path');
+
+const ruta = path.join('test','md-links.spect.js');
+console.log(ruta);
