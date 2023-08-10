@@ -31,5 +31,16 @@ const ruta = path.join('test','md-links.spect.js');
 console.log(ruta);
 
 //convertir ruta relativa en absoluta
-const pathResolve = path.resolve('test', 'md-links.spec.js');
-console.log(pathResolve);
+const absolutePath = path.resolve('test', 'md-links.spec.js');
+console.log(absolutePath);
+
+//validar si la ruta ¿archivo? existe
+if(fs.existsSync('./test')){
+    console.log('La ruta EXISTE');
+} else {
+    console.log('La ruta NO EXISTE!');
+}
+
+//validar que sea un archivo .md
+
+module.exports = ('function.js')
