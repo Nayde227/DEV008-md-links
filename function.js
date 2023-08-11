@@ -34,13 +34,21 @@ console.log(ruta);
 const absolutePath = path.resolve('test', 'md-links.spec.js');
 console.log(absolutePath);
 
-//validar si la ruta ¿archivo? existe
-if(fs.existsSync('./test')){
-    console.log('La ruta EXISTE');
+
+//validar si el archivo existe
+if(fs.existsSync('README.md')){
+    console.log('El archivo EXISTE');
 } else {
-    console.log('La ruta NO EXISTE!');
+    console.log('El archivo NO EXISTE!');
 }
 
+//validar si la ruta existe
+fs.access('./test', fs.constants.F_OK, (err) => {
+    console.log('\n> La ruta existe');
+   
+    if (err) {
+      console.error('La ruta no existe');}
+})
 //validar que sea un archivo .md
 
 module.exports = ('function.js')

@@ -1,15 +1,16 @@
-const mdLinks = require('../index.js');
+const { mdLinks } = require('../index.js');
 
-
-describe('mdLinks', () => {
+const { getFileExtension } = require('../function.js')
+describe('obtener extension', () => {
 
   it('should...', () => {
     console.log('FIX ME!');
   });
 
-  it('Deberia devolver una promesa', () => {
-    expect(mdLinks()).toBe(typeof Promise);
-    
+  it('debería obtener la extensión del archivo', () => {
+    const file = 'README.md';
+    const extension = '.md';
+    const result = getFileExtension(file);
   });
 
 
