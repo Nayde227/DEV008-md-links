@@ -1,13 +1,16 @@
-const paths = require('./function');
+const { absolutePath } = require('./function')
+const functions = require ('./mdLinks')
 
 const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
-    //si la ruta existe
-   if(existsPath(path)){
-    resolve(absolutePath);
-   } else {
-    reject('la ruta no existe');
-   }
+    //Validar que el archivo existe
+    
+    if(!fs.existsSync(path)){
+        reject(new Error ("file not exists"))
+        return
+    } else {
+        resolve(fs.existsSync(path))
+    }
 })
 }
 

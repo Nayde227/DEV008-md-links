@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 //Función para leer el archivo
 fs.readFile('./README.md',  function(err, data){
@@ -25,7 +26,7 @@ let files = fs.readdirSync('./test');
 console.log(files);
 
 //Unir dos segmentos de rutas 
-const path = require('path');
+
 
 const ruta = path.join('test','md-links.spect.js');
 console.log(ruta);
@@ -44,11 +45,12 @@ if(fs.existsSync('README.md')){
 
 //validar si la ruta existe
 fs.access('./test', fs.constants.F_OK, (err) => {
-    console.log('\n> La ruta existe');
+    console.log('La ruta existe');
    
     if (err) {
       console.error('La ruta no existe');}
 })
-//validar que sea un archivo .md
 
-module.exports = ('function.js')
+//validar que sea archivo o directiorio
+//validar que sea un archivo .md
+module.exports = {absolutePath}
