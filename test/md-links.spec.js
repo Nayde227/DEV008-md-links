@@ -1,17 +1,21 @@
-const { mdLinks } = require('../index.js');
+const { mdLinks }  = require('../index.js');
 
-const { getFileExtension } = require('../function.js')
-describe('obtener extension', () => {
+
+describe('rechazar si el path no existe', () => {
 
   it('should...', () => {
     console.log('FIX ME!');
   });
 
-  it('debería obtener la extensión del archivo', () => {
-    const file = 'README.md';
-    const extension = '.md';
-    const result = getFileExtension(file);
-  });
+  /*it('debería devolver una promesa', () => {
+    expect(mdLinks()).toBe(typeof Promise);
+  });*/
 
+  it('debería rechazar la promesa si el path no existe', () => {
+    return mdLinks('./EstaRutaNo.md').catch(() => {
+      expect(error).toBe('file not exists')
+    })
+  })
+  
 
 });

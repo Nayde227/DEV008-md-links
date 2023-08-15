@@ -1,19 +1,20 @@
-const { absolutePath } = require('./function')
+const { absolutePath, existsFile, existsDir } = require('./function')
 const functions = require ('./mdLinks')
+
 
 const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
+   
     //Validar que el archivo existe
     
-    if(!fs.existsSync(path)){
-        reject(new Error ("file not exists"))
-        return
+    if(!existsFile){
+        reject('file not exists')
     } else {
-        resolve(fs.existsSync(path))
+        console.log('file exists')
     }
 })
 }
 
-module.exports = () => {
+module.exports = {
 mdLinks
 }
