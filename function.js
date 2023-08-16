@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const index = require('./index');
+const options = {};
 let file = 'README.md';
 let folder = './test';
 
@@ -12,15 +14,8 @@ const existsDir = fs.access(folder, fs.constants.F_OK, (err) => {
 })
 
 //validar si el archivo existe
-const existsFile = (path) => {
-    return fs.existsSync(path)
-}
-/*
-if (existsFile) {
-    console.log('El archivo EXISTE');
-} else {
-    console.log('El archivo NO EXISTE!');
-}*/
+
+console.log(index.mdLinks(path, options))
 
 
 //Función para leer el archivo
@@ -60,4 +55,4 @@ console.log(absolutePath);
 //validar que sea un archivo .md
 
 
-module.exports = {absolutePath, existsFile, readFile, getFileExtension, existsDir}
+module.exports = {absolutePath, readFile, getFileExtension, existsDir}

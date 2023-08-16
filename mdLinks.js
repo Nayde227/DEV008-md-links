@@ -1,4 +1,4 @@
-const fs = require('fs');
+/*const fs = require('fs');
 const path = require('path');
 
 
@@ -15,7 +15,7 @@ const main = (path, options) => {
         if (existsFile) {
             console.log('El archivo EXISTE');
         } else {
-            console.log('El archivo NO EXISTE!');
+            reject(console.log('El archivo NO EXISTE!'));
         }
 
         /*const response = {
@@ -25,12 +25,12 @@ const main = (path, options) => {
         const exists = existsFile(path)
         if(!exists) return response;
         response.ok = true
-        return response;*/
+        return response;
     })
 }
-/*const absPath = (path) => {
+const absPath = (path) => {
     return path.resolve(path)
-}*/
+
 module.exports = {
     main
-}
+}*/

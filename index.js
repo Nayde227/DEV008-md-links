@@ -1,18 +1,21 @@
-const { absolutePath, existsFile, existsDir } = require('./function')
-const functions = require ('./mdLinks')
-
 
 const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
    
-    //Validar que el archivo existe
-    
-    if(!existsFile){
-        reject('file not exists')
-    } else {
-        console.log('file exists')
+    const existsFile = (path) => {
+        return fs.existsSync(path)
     }
+    
+    if (existsFile) {
+        console.log('El archivo EXISTE');
+    } else {
+        reject(console.log('El archivo NO EXISTE!'));
+    }
+
+    
 })
+
+
 }
 
 module.exports = {
