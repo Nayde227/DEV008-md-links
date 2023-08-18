@@ -1,27 +1,27 @@
 const fs = require('fs');
 const path = require('path');
-const index = require('./index');
-const options = {};
-let file = 'README.md';
-let folder = './test';
+//const index = require('./index');
 
-//validar si la ruta existe
-const existsDir = fs.access(folder, fs.constants.F_OK, (err) => {
-    console.log('La ruta existe');
-   
+
+
+//validar si la ruta existe FUNCIONA
+const existsDir = fs.access('README.md', fs.constants.F_OK, (err) => {
     if (err) {
-      console.error('La ruta no existe');}
+        console.error('La ruta no existe');
+    } else {console.log('La ruta existe');}
+    
+    
 })
 
 //validar si el archivo existe
 
-console.log(index.mdLinks(path, options))
+//console.log(index.mdLinks(path, options))
 
 
-//Función para leer el archivo
-const readFile = fs.readFile(file,  (err, data) => {
+//Función para leer el archivo FUNCIONANDO
+const readFile = fs.readFile('README.md',  (err, data) => {
 if(err){
-    console.log('ocurrió un error');
+    console.log('no se ha podido leer el archivo');
 } else {
     console.log(data.toString());
 }
@@ -29,14 +29,11 @@ if(err){
 
 //Función para obtener la extensión del archivo
 
-
-function getFileExtension(file){
-    return file.split('.').pop();
-} console.log(getFileExtension(file));
-
+const getFileExtension = path.extname('README.md')
+console.log(getFileExtension)
 //Función para obtener el contenido de un directorio (imprime en consola la lista de arch de una file)
 
-const readDir = fs.readdirSync(folder);
+const readDir = fs.readdirSync('./coverage');
 console.log(readDir);
 
 //Unir dos segmentos de rutas 

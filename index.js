@@ -1,8 +1,13 @@
+const { existsDir } = require("./function");
 
 const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
    
-    const existsFile = (path) => {
+   if (!existsDir){
+    reject(new Error('invalid route'))
+   }
+    
+    /*const existsFile = (path) => {
         return fs.existsSync(path)
     }
     
@@ -11,7 +16,7 @@ return new Promise((resolve, reject) => {
     } else {
         reject(console.log('El archivo NO EXISTE!'));
     }
-
+*/
     
 })
 
