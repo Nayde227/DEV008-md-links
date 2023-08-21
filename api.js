@@ -1,5 +1,5 @@
-const mdLinks = require ('./mdLinks')
+/*const mdLinks = require ('./mdLinks')
 
-const path = './REssdADME.md';
+const path = './READme.md';
 const options = {};
-console.log(mdLinks.main(path, options))
+console.log(mdLinks.main(path, options))*/

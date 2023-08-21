@@ -1,4 +1,4 @@
-const fs = require('fs');
+/*const fs = require('fs');
 const path = require('path');
 
 
@@ -12,13 +12,13 @@ const main = (path, options) => {
             return fs.existsSync(path)
         }
         
-        if (existsFile) {
-            console.log('El archivo EXISTE');
-        } else {
+        if (!existsFile) {
             reject(console.log('El archivo NO EXISTE!'));
+        } else {
+            console.log('El archivo EXISTE');
         }
     })}
-/*
+
         const response = {
             ok: false,
             data: []
