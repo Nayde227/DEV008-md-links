@@ -1,53 +1,61 @@
 const fs = require('fs');
 const path = require('path');
 
-//validar si la ruta del directorio existe
-const existsDir = fs.existsSync(path) 
-if(fs.existsSync('./hola')){
-    console.log('el directorio existe')
-   } else { console.log('el directorio no existe')}
+//validar si la ruta existe existe
+const existsPath = (filePath) => {
+    return fs.existsSync(filePath)
+}
+//console.log(existsPath('README.md'));
+
 
 
 //Función para obtener el contenido de un directorio (imprime en consola la lista de arch de un directorio)
 
-const readDir = fs.readdirSync('./coverage');
-console.log(readDir);
+const readDir = (filePath) => {
+    return fs.readdirSync(filePath)
+}
+console.log(readDir('./coverage'));
 
 
 //Función para obtener la extensión del archivo y validar que sea md
 
-const getFileExtension = (path) => path.extname(path) === '.md'
+const getFileExtension = (filePath) => {
+    return path.extname(filePath) === '.md'
+}
+   // console.log(getFileExtension('./thumb.png'))
 
-if(getFileExtension){
-    console.log('.md')
-} else { console.log('este no es un archivo marckdown')}
+
 
 //Unir dos segmentos de rutas 
 
-const routes = path.join('test','md-links.spect.js');
-console.log(routes);
+const routes = (filePath) => path.join(filePath);
+console.log(routes('test', 'md-links.spect.js'));
 
 //obtener ruta absoluta
 
-const absolutePath = path.resolve('test', 'md-links.spec.js');
-console.log(absolutePath);
+const absolutePath = (filePath) => path.resolve(filePath);
+console.log(absolutePath('test', 'md-links.spec.js'));
 
 //Función para leer el archivo
 
-const readFile = fs.readFile('READM.md', 'utf-8', (err, data) => {
 
-if(err) {
-    console.log('no se pudo leer el archivo')
-} else {
-    console.log(data)
-}
-})
-
+const readFile = (filePath) => {
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.log('No se pudo leer el archivo');
+        } else {
+            console.log(data); // Imprime el contenido del archivo leído
+        }
+    });
+};
 
 
 // transformar ruta relativa en absoluta
 
+// validar si es archivo o directorio
+const isDirectory = (filePath) => {
+    fs.stat(filePath, 'es directorio')
+}
 
 
-
-module.exports = {absolutePath, readFile, getFileExtension, existsDir}
+module.exports = {  existsPath, readFile,getFileExtension }
