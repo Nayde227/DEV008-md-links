@@ -1,4 +1,4 @@
-const { existsPath } = require('../function.js');
+
 const { mdLinks }  = require('../index.js');
 
 
@@ -19,5 +19,10 @@ describe('mdLinks', () => {
     })
   })
   
+  it('debe rechazar cuando no es un directorio', () => {
+    return mdLinks('./README.md').catch((error) => {
+      expect(error).toBe('No es un directorio')
+    })
+  })
 
 });
