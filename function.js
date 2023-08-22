@@ -7,6 +7,11 @@ const existsPath = (filePath) => {
 }
 //console.log(existsPath('README.md'));
 
+//validar si la ruta es un directorio
+const isDirectory = (dirPath) => {
+    return fs.lstatSync(dirPath).isDirectory();
+}
+//console.log(isDirectory('./test'))
 
 
 //Función para obtener el contenido de un directorio (imprime en consola la lista de arch de un directorio)
@@ -52,10 +57,7 @@ const readFile = (filePath) => {
 
 // transformar ruta relativa en absoluta
 
-// validar si es archivo o directorio
-const isDirectory = (filePath) => {
-    fs.stat(filePath, 'es directorio')
-}
 
 
-module.exports = {  existsPath, readFile,getFileExtension }
+
+module.exports = {  existsPath, readFile,getFileExtension, isDirectory }
