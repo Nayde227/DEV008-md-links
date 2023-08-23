@@ -5,13 +5,13 @@ const path = require('path');
 const existsPath = (filePath) => {
     return fs.existsSync(filePath)
 }
-//console.log(existsPath('README.md'));
+
 
 //validar si la ruta es un directorio
 const isDirectory = (dirPath) => {
     return fs.lstatSync(dirPath).isDirectory();
 }
-//console.log(isDirectory('./test'))
+
 
 
 //Función para obtener el contenido de un directorio (imprime en consola la lista de arch de un directorio)
@@ -19,14 +19,22 @@ const isDirectory = (dirPath) => {
 const readDir = (filePath) => {
     return fs.readdirSync(filePath)
 }
-console.log(readDir('./coverage'));
-
 
 //Función para obtener la extensión del archivo y validar que sea md
 
 const getFileExtension = (filePath) => {
     return path.extname(filePath) === '.md'
 }
+
+//filtrar los archivos md (Pedir ayuda para cambiar el argumento)
+
+const files = readDir('./pruebas');
+
+const markdownFiles = files.filter(fileName => getFileExtension(fileName));
+
+
+
+
    // console.log(getFileExtension('./thumb.png'))
 
 
@@ -34,12 +42,20 @@ const getFileExtension = (filePath) => {
 //Unir dos segmentos de rutas 
 
 const routes = (filePath) => path.join(filePath);
-console.log(routes('test', 'md-links.spect.js'));
 
 //obtener ruta absoluta
 
 const absolutePath = (filePath) => path.resolve(filePath);
-console.log(absolutePath('test', 'md-links.spec.js'));
+
+
+// transformar ruta relativa en absoluta (pedir Ayuda para cambiar argumento)
+
+const relativePath = './test';
+
+const turnAbsolute = absolutePath(routes(relativePath));
+console.log(turnAbsolute)
+
+
 
 //Función para leer el archivo
 
@@ -54,10 +70,4 @@ const readFile = (filePath) => {
     });
 };
 
-
-// transformar ruta relativa en absoluta
-
-
-
-
-module.exports = {  existsPath, readFile,getFileExtension, isDirectory }
+module.exports = {  existsPath, readFile,getFileExtension, isDirectory, markdownFiles, absolutePath }

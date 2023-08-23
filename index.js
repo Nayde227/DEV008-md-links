@@ -1,4 +1,10 @@
-const { existsPath,readFile, getFileExtension, isDirectory} = require('./function');
+const { existsPath,
+    readFile, 
+    getFileExtension, 
+    isDirectory, 
+    markdownFiles, 
+    absolutePath, 
+    } = require('./function');
 
 const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
@@ -10,18 +16,22 @@ return new Promise((resolve, reject) => {
  
     if(isDirectory(path)) {
         console.log(isDirectory(path))
+        console.log(markdownFiles)
     } else {
         reject('No es un directorio')
     }
+
+    if(absolutePath)
     console.log(getFileExtension(path))
     
     console.log(readFile(path))
- 
+    
+    
 })
 
 
 }
-mdLinks('./README.md')
+mdLinks('./pruebas')
 .then((result) => {
     console.log(result)
 })
