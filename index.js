@@ -3,7 +3,8 @@ const { existsPath,
     getFileExtension, 
     isDirectory, 
     markdownFiles, 
-    absolutePath, 
+    absolutePath,
+    turnAbsolute 
     } = require('./function');
 
 const mdLinks = (path, options) => {
@@ -26,12 +27,13 @@ return new Promise((resolve, reject) => {
     
     console.log(readFile(path))
     
+    console.log(turnAbsolute(path))
     
 })
 
 
 }
-mdLinks('./pruebas')
+mdLinks('./README.md')
 .then((result) => {
     console.log(result)
 })

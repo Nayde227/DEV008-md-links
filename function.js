@@ -48,14 +48,11 @@ const routes = (filePath) => path.join(filePath);
 const absolutePath = (filePath) => path.resolve(filePath);
 
 
-// transformar ruta relativa en absoluta (pedir Ayuda para cambiar argumento)
+// transformar ruta relativa en absoluta 
 
-const relativePath = './test';
-
-const turnAbsolute = absolutePath(routes(relativePath));
-console.log(turnAbsolute)
-
-
+const turnAbsolute = (filePath) =>  absolutePath(routes(filePath));
+ 
+//console.log(turnAbsolute('./pruebas'))
 
 //Función para leer el archivo
 
@@ -70,4 +67,10 @@ const readFile = (filePath) => {
     });
 };
 
-module.exports = {  existsPath, readFile,getFileExtension, isDirectory, markdownFiles, absolutePath }
+module.exports = {  existsPath,
+     readFile,
+     getFileExtension, 
+     isDirectory, 
+     markdownFiles, 
+     absolutePath,
+     turnAbsolute}
