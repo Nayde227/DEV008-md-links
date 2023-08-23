@@ -25,17 +25,19 @@ const readDir = (filePath) => {
 const getFileExtension = (filePath) => {
     return path.extname(filePath) === '.md'
 }
+// console.log(getFileExtension('./thumb.png'))
+
 
 //filtrar los archivos md (Pedir ayuda para cambiar el argumento)
 
-const files = readDir('./pruebas');
-
-const markdownFiles = files.filter(fileName => getFileExtension(fileName));
 
 
+const markdownFiles = (filePath) => readDir(filePath).filter(filePath => getFileExtension(filePath));
+ // file => getFileExtension(file) devuelve true o false
 
+ //console.log(markdownFiles('./pruebas'))
 
-   // console.log(getFileExtension('./thumb.png'))
+   
 
 
 

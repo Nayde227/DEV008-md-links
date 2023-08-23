@@ -17,7 +17,7 @@ return new Promise((resolve, reject) => {
  
     if(isDirectory(path)) {
         console.log(isDirectory(path))
-        console.log(markdownFiles)
+        console.log(markdownFiles(path))
     } else {
         reject('No es un directorio')
     }
@@ -33,7 +33,7 @@ return new Promise((resolve, reject) => {
 
 
 }
-mdLinks('./README.md')
+mdLinks('./pruebas')
 .then((result) => {
     console.log(result)
 })
