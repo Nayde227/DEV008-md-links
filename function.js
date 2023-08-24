@@ -59,6 +59,8 @@ const turnAbsolute = (filePath) =>  absolutePath(routes(filePath));
 //Función para leer el archivo
 
 
+
+
 const readFile = (filePath) => {
     fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
@@ -68,6 +70,9 @@ const readFile = (filePath) => {
         }
     });
 };
+
+//FALTA LEER LOS ARCHIVOS DE UN DIRECTORIO (pedir ayuda en oh)
+
 
 module.exports = {  existsPath,
      readFile,

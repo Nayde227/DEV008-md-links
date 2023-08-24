@@ -18,6 +18,7 @@ return new Promise((resolve, reject) => {
     if(isDirectory(path)) {
         console.log(isDirectory(path))
         console.log(markdownFiles(path))
+        console.log(readFile(path))
     } else {
         reject('No es un directorio')
     }
