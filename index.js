@@ -11,6 +11,9 @@ const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
     if(existsPath(path)) {
         console.log(existsPath(path))
+        if (absolutePath(path)) {
+            console.log(turnAbsolute(path))
+        }
     } else {
         reject('La ruta no existe')
     }
@@ -20,21 +23,21 @@ return new Promise((resolve, reject) => {
         console.log(markdownFiles(path))
         console.log(readFile(path))
     } else {
-        reject('No es un directorio')
+        if(getFileExtension(path)){
+            console.log(getFileExtension(path))
+            console.log(readFile(path))
+         } else {
+            reject('No es un archivo .md')
+         }
+        
     }
 
-    if(absolutePath)
-    console.log(getFileExtension(path))
-    
-    console.log(readFile(path))
-    
-    console.log(turnAbsolute(path))
     
 })
 
 
 }
-mdLinks('./pruebas')
+mdLinks('pruebas')
 .then((result) => {
     console.log(result)
 })
