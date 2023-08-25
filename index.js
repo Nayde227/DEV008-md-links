@@ -19,9 +19,9 @@ return new Promise((resolve, reject) => {
     }
  
     if(isDirectory(path)) {
-        console.log(isDirectory(path))
+       console.log(isDirectory(path))
         console.log(markdownFiles(path))
-        console.log(readFile(path))
+        //console.log(readFile(path)) NO ME LEE ARCHIVOS DENTRO DE UN DIRECTORIO
     } else {
         if(getFileExtension(path)){
             console.log(getFileExtension(path))
@@ -37,7 +37,7 @@ return new Promise((resolve, reject) => {
 
 
 }
-mdLinks('pruebas')
+mdLinks('./README.md')
 .then((result) => {
     console.log(result)
 })

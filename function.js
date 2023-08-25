@@ -28,7 +28,7 @@ const getFileExtension = (filePath) => {
 // console.log(getFileExtension('./thumb.png'))
 
 
-//filtrar los archivos md (Pedir ayuda para cambiar el argumento)
+//filtrar los archivos md 
 
 
 
@@ -36,9 +36,6 @@ const markdownFiles = (filePath) => readDir(filePath).filter(filePath => getFile
  // file => getFileExtension(file) devuelve true o false
 
  //console.log(markdownFiles('./pruebas'))
-
-   
-
 
 
 //Unir dos segmentos de rutas 
@@ -63,15 +60,13 @@ const turnAbsolute = (filePath) =>  absolutePath(routes(filePath));
 
 const readFile = (filePath) => {
     fs.readFile(filePath, 'utf-8', (err, data) => {
-        if (err) {
-            console.log('No se pudo leer el archivo');
-        } else {
             console.log(data); // Imprime el contenido del archivo leído
-        }
+      
     });
 };
 
 //FALTA LEER LOS ARCHIVOS DE UN DIRECTORIO (pedir ayuda en oh)
+
 
 
 module.exports = {  existsPath,
@@ -81,3 +76,22 @@ module.exports = {  existsPath,
      markdownFiles, 
      absolutePath,
      turnAbsolute}
+
+
+
+/*
+     // Ruta del directorio a explorar
+const directoryPath = './pruebas'; // Cambiar por la ruta deseada
+
+if (existsPath(directoryPath)) {
+    if (isDirectory(directoryPath)) {
+        const mdFiles = markdownFiles(directoryPath);
+        mdFiles.forEach((file) => {
+            const fileFullPath = turnAbsolute(path.join(directoryPath, file));
+            readFile(fileFullPath);
+        });
+    } else {
+        console.log('La ruta no es un directorio.');
+    }
+} else {
+    console.log('La ruta no existe.');*/
