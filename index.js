@@ -4,7 +4,7 @@ const { existsPath,
     isDirectory, 
     markdownFiles, 
     absolutePath,
-    turnAbsolute 
+    turnAbsolute, 
     } = require('./function');
 
 const mdLinks = (path, options) => {
@@ -31,13 +31,13 @@ return new Promise((resolve, reject) => {
          }
         
     }
-
+    
     
 })
 
 
 }
-mdLinks('pruebas')
+mdLinks('pruebas/prueba1.md')
 .then((result) => {
     console.log(result)
 })

@@ -1,3 +1,4 @@
+const { log } = require('console');
 const fs = require('fs');
 const path = require('path');
 
@@ -73,6 +74,21 @@ const readFile = (filePath) => {
 
 //FALTA LEER LOS ARCHIVOS DE UN DIRECTORIO (pedir ayuda en oh)
 
+//---------------------------Links and Stats-------------------
+
+function extractLinks(filePath) {
+    const linkRegex  = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
+    const links = []
+    let match;
+
+    while((match = linkRegex.exec(filePath)) !== null) {
+        const [, filePath, url] = match;
+        links.push({filePath, url})
+    }
+    return links
+    console.log(links);
+}
+console.log(extractLinks('./README.md'))
 
 module.exports = {  existsPath,
      readFile,
@@ -81,3 +97,9 @@ module.exports = {  existsPath,
      markdownFiles, 
      absolutePath,
      turnAbsolute}
+
+//      var linkRegex = /(https?:\/\/[^ ]*)/;
+
+// var input = "https://medium.com/aspen-ideas/there-s-no-blueprint-26f6a2fbb99c random stuff sd";
+// var url = input.match(linkRegex)[1];
+// console.log(url);
