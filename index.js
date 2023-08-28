@@ -5,6 +5,7 @@ const { existsPath,
     markdownFiles, 
     absolutePath,
     turnAbsolute, 
+    extractLinks
     } = require('./function');
 
 const mdLinks = (path, options) => {
@@ -24,8 +25,12 @@ return new Promise((resolve, reject) => {
         console.log(readFile(path))
     } else {
         if(getFileExtension(path)){
-            console.log(getFileExtension(path))
-            console.log(readFile(path))
+            readFile(path).then((fileContent) => {
+               
+               console.log(extractLinks(fileContent, path)) 
+            })
+            
+             
          } else {
             reject('No es un archivo .md')
          }
@@ -37,7 +42,7 @@ return new Promise((resolve, reject) => {
 
 
 }
-mdLinks('pruebas/prueba1.md')
+mdLinks('./README.md')
 .then((result) => {
     console.log(result)
 })

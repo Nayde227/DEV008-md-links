@@ -1,4 +1,4 @@
-const { log } = require('console');
+
 const fs = require('fs');
 const path = require('path');
 
@@ -31,17 +31,12 @@ const getFileExtension = (filePath) => {
 
 //filtrar los archivos md (Pedir ayuda para cambiar el argumento)
 
-
-
 const markdownFiles = (filePath) => readDir(filePath).filter(filePath => getFileExtension(filePath));
  // file => getFileExtension(file) devuelve true o false
 
  //console.log(markdownFiles('./pruebas'))
 
    
-
-
-
 //Unir dos segmentos de rutas 
 
 const routes = (filePath) => path.join(filePath);
@@ -59,36 +54,45 @@ const turnAbsolute = (filePath) =>  absolutePath(routes(filePath));
 
 //Función para leer el archivo
 
-
-
-
 const readFile = (filePath) => {
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-        if (err) {
-            console.log('No se pudo leer el archivo');
-        } else {
-            console.log(data); // Imprime el contenido del archivo leído
-        }
-    });
+    return new Promise ((resolve, reject) => {
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+                console.log('No se pudo leer el archivo');
+                reject (err)
+            } else {
+                console.log('readFile', data); // Imprime el contenido del archivo leído
+                resolve (data)
+            }
+        });
+    })
+    
 };
 
-//FALTA LEER LOS ARCHIVOS DE UN DIRECTORIO (pedir ayuda en oh)
+//--------------------------- ExtractLinks and Stats-------------------
 
-//---------------------------Links and Stats-------------------
+// Función para extraer links
 
-function extractLinks(filePath) {
-    const linkRegex  = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
-    const links = []
+function extractLinks(fileContent, filePath) {
+    
+    const linkRegex = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
+    const links = [];
     let match;
+    //console.log(linkRegex.exec(fileContent))
 
-    while((match = linkRegex.exec(filePath)) !== null) {
-        const [, filePath, url] = match;
-        links.push({filePath, url})
+    while ((match = linkRegex.exec(fileContent)) !== null) {
+       
+        const [, linkText, url] = match; 
+        links.push({ linkText, url, filePath }); 
     }
-    return links
-    console.log(links);
+    
+    return links;
 }
-console.log(extractLinks('./README.md'))
+
+//  let pruebaLink = '[Github](https://github.com/Nayde227/DEV008-md-links)'
+//  let pruebaDos = '[Google](https://calendar.google.com/calendar/u/0/r/week)'
+//   console.log(extractLinks(pruebaLink + pruebaDos))
+
 
 module.exports = {  existsPath,
      readFile,
@@ -96,7 +100,23 @@ module.exports = {  existsPath,
      isDirectory, 
      markdownFiles, 
      absolutePath,
-     turnAbsolute}
+     turnAbsolute,
+    extractLinks}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
 
 //      var linkRegex = /(https?:\/\/[^ ]*)/;
 
