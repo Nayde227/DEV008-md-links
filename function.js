@@ -84,7 +84,7 @@ function extractLinks(fileContent, filePath) {
     const linkRegex = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
     const links = [];
     let match;
-    //console.log(linkRegex.exec(fileContent))
+    //console.log(linkRegex.exec(fileContent)) para leer todas las coincidencias del array
 
     while ((match = linkRegex.exec(fileContent)) !== null) {
        
