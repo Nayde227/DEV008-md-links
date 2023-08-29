@@ -52,6 +52,7 @@ const turnAbsolute = (filePath) =>  absolutePath(routes(filePath));
  
 //console.log(turnAbsolute('./pruebas'))
 
+
 //Función para leer el archivo
 
 const readFile = (filePath) => {
@@ -69,6 +70,11 @@ const readFile = (filePath) => {
     
 };
 
+
+
+     
+
+
 //--------------------------- ExtractLinks and Stats-------------------
 
 // Función para extraer links
@@ -82,16 +88,14 @@ function extractLinks(fileContent, filePath) {
 
     while ((match = linkRegex.exec(fileContent)) !== null) {
        
-        const [, linkText, url] = match; 
-        links.push({ linkText, url, filePath }); 
+        const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
+        links.push({ linkText, url, filePath }); //(agrega un objeto al array links)
     }
     
     return links;
 }
 
-//  let pruebaLink = '[Github](https://github.com/Nayde227/DEV008-md-links)'
-//  let pruebaDos = '[Google](https://calendar.google.com/calendar/u/0/r/week)'
-//   console.log(extractLinks(pruebaLink + pruebaDos))
+//Recursividad 
 
 
 module.exports = {  existsPath,
@@ -101,25 +105,38 @@ module.exports = {  existsPath,
      markdownFiles, 
      absolutePath,
      turnAbsolute,
+     
     extractLinks}
 
 
 
 
 
+    /*
+//Función recursiva para extraer links en directorio
+const exploreAndExtractLinks = (directoryPath) => {
+    const mdFiles = markdownFiles(directoryPath);
+    const allLinks = [];
 
+    const processNextFile = (index) => {
+        if (index < mdFiles.length) {
+            const file = mdFiles[index];
+            const fileFullPath = turnAbsolute(path.join(directoryPath, file));
 
+            readFile(fileFullPath)
+                .then(fileContent => {
+                    const linksInFile = extractLinks(fileContent, fileFullPath);
+                    allLinks.push(...linksInFile);
+                    processNextFile(index + 1);
+                })
+  
+          console.log('Extracted links:', allLinks);
+     }
+    };
 
+    processNextFile(0);
+};
 
+console.log(exploreAndExtractLinks('./pruebas'));
 
-
-
-
-
-     
-
-//      var linkRegex = /(https?:\/\/[^ ]*)/;
-
-// var input = "https://medium.com/aspen-ideas/there-s-no-blueprint-26f6a2fbb99c random stuff sd";
-// var url = input.match(linkRegex)[1];
-// console.log(url);
+*/
