@@ -95,16 +95,17 @@ function extractLinks(fileContent, filePath) {
     return links;
 }
 
-/* Petición HTTP 
+ //Petición HTTP 
 
-    axios.get("https://jsonplaceholder.typicode.com/posts")
-    .then((response) => console.log(response.data))
-    .catch((error) => console.log(error));
-
-axios Funciona
-  .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-  .then(response => console.log((response.data)))
-  .catch(error => console.log(error, 'error en links')) */
+  /* function checkLink(link) {
+        return axios.head(link.url)
+        
+  .then(response => ({status:response.status}))
+  .catch(error => ({status: error.response})) 
+    }
+    console.log(checkLink('https://jsonplaceholder.typicode.com/posts'))
+*/
+  
 
 module.exports = {
     existsPath,
