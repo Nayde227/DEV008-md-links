@@ -54,13 +54,33 @@ describe('mdLinks', () => {
 
   })
 
-  /*
+  
+describe('turnAbsolute', () => {
+
+  it('Debe transformar la ruta en absoluta', () => {
+    const filePath = './README.md'
+    const absolutePath = 'C:\\Users\\elmae\\OneDrive\\Desktop\\Laboratoria\\5. MD-Links\\DEV008-md-links\\README.md'
+    const result = turnAbsolute(filePath)
+    
+      expect(result).toBe(absolutePath)
+    })
+  })
+
 describe('getFileExtension', () => {
 
-  it('debe obtener la extensión de un arvchivo', () => {
-     getFileExtension('./README.md') => {
-      return expect(error).toBe(false)
-     }
-      
-    })
-  })*/
+  it('Debe dar true cuando el arvhivo es === .md', () => {
+    const filePath = './README.md'
+    const expectedExtension = true
+    const result = getFileExtension(filePath)
+
+    expect(result).toBe(expectedExtension)
+  })
+})
+//Este no se muestra en los test
+describe('markDownFiles', () => {
+  const filePath = './pruebas'
+  const expected = ["prueba1.md", "prueba2.md"];
+  const result = markdownFiles(filePath);
+
+expect(result).toEqual(expected);
+})

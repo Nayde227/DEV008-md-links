@@ -13,7 +13,7 @@ const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
     if(existsPath(path)) {
         console.log(existsPath(path))
-        if (!absolutePath(path)) {
+        if (absolutePath(path)) {
             console.log('vuelvo absoluta', turnAbsolute(path))
         }
     } else {
@@ -44,7 +44,7 @@ return new Promise((resolve, reject) => {
 
 
 }
-mdLinks('pruebas/prueba1.md')
+mdLinks('./README.md')
 .then((result) => {
     console.log(result)
 })
