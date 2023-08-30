@@ -1,7 +1,7 @@
 
 const { mdLinks }  = require('../index.js');
-
-
+const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readDir } = require('../function.js')
+/*
 describe('mdLinks', () => {
 
   it('should...', () => {
@@ -23,13 +23,44 @@ describe('mdLinks', () => {
   })
 
   
-  
 });
-/*
-describe()
-it('debe obtener la extensión de un arvchivo', () => {
-  return mdLinks('./pruebas').catch((error) => {
-    expect(error).toBe('No se pudo leer el archivo')
-  })
-})
 */
+  
+
+  describe("Is a function", () => {
+    it("getFileExtension Es una función", () => {
+      expect(typeof getFileExtension).toBe("function");
+    });
+
+    it("markdowFiles Es una función", () => {
+      expect(typeof markdownFiles).toBe("function");
+    });
+
+    it("turnAbsolute Es una función", () => {
+      expect(typeof turnAbsolute).toBe("function");
+    });
+
+    it("absolutePath Es una función", () => {
+      expect(typeof absolutePath).toBe("function");
+    });
+
+    it("isDirectory Es una función", () => {
+      expect(typeof isDirectory).toBe("function");
+    });
+
+    it("existsPath", () => {
+      expect(typeof existsPath).toBe("function");
+    });
+
+  })
+
+  /*
+describe('getFileExtension', () => {
+
+  it('debe obtener la extensión de un arvchivo', () => {
+     getFileExtension('./README.md') => {
+      return expect(error).toBe(false)
+     }
+      
+    })
+  })*/

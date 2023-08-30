@@ -1,3 +1,4 @@
+const axios = require('axios')
 const fs = require('fs');
 const path = require('path');
 
@@ -28,14 +29,14 @@ const getFileExtension = (filePath) => {
 // console.log(getFileExtension('./thumb.png'))
 
 
-//filtrar los archivos md 
+//filtrar los archivos md (Pedir ayuda para cambiar el argumento)
 
 
 
 const markdownFiles = (filePath) => readDir(filePath).filter(filePath => getFileExtension(filePath));
- // file => getFileExtension(file) devuelve true o false
+// file => getFileExtension(file) devuelve true o false
 
- //console.log(markdownFiles('./pruebas'))
+//console.log(markdownFiles('./pruebas'))
 
 
 //Unir dos segmentos de rutas 
@@ -49,49 +50,106 @@ const absolutePath = (filePath) => path.resolve(filePath);
 
 // transformar ruta relativa en absoluta 
 
-const turnAbsolute = (filePath) =>  absolutePath(routes(filePath));
- 
+const turnAbsolute = (filePath) => absolutePath(routes(filePath));
+
 //console.log(turnAbsolute('./pruebas'))
+
 
 //Función para leer el archivo
 
-
-
-
 const readFile = (filePath) => {
-    fs.readFile(filePath, 'utf-8', (err, data) => {
-            console.log(data); // Imprime el contenido del archivo leído
-      
-    });
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+                console.log('No se pudo leer el archivo');
+                reject(err)
+            } else {
+                console.log('readFile', data); // Imprime el contenido del archivo leído
+                resolve(data)
+            }
+        });
+    })
+
 };
 
-//FALTA LEER LOS ARCHIVOS DE UN DIRECTORIO (pedir ayuda en oh)
 
 
 
-module.exports = {  existsPath,
-     readFile,
-     getFileExtension, 
-     isDirectory, 
-     markdownFiles, 
-     absolutePath,
-     turnAbsolute}
+
+
+//--------------------------- ExtractLinks and Stats-------------------
+
+// Función para extraer links
+
+function extractLinks(fileContent, filePath) {
+
+    const linkRegex = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
+    const links = [];
+    let match;
+    //console.log(linkRegex.exec(fileContent)) para leer todas las coincidencias del array
+
+    while ((match = linkRegex.exec(fileContent)) !== null) {
+
+        const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
+        links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
+    }
+
+    return links;
+}
+
+ //Petición HTTP 
+
+  /* function checkLink(link) {
+        return axios.head(link.url)
+        
+  .then(response => ({status:response.status}))
+  .catch(error => ({status: error.response})) 
+    }
+    console.log(checkLink('https://jsonplaceholder.typicode.com/posts'))
+*/
+  
+
+module.exports = {
+    existsPath,
+    readFile,
+    getFileExtension,
+    isDirectory,
+    markdownFiles,
+    absolutePath,
+    turnAbsolute,
+
+    extractLinks
+}
+
+
 
 
 
 /*
-     // Ruta del directorio a explorar
-const directoryPath = './pruebas'; // Cambiar por la ruta deseada
+//Función recursiva para extraer links en directorio
+const exploreAndExtractLinks = (directoryPath) => {
+const mdFiles = markdownFiles(directoryPath);
+const allLinks = [];
 
-if (existsPath(directoryPath)) {
-    if (isDirectory(directoryPath)) {
-        const mdFiles = markdownFiles(directoryPath);
-        mdFiles.forEach((file) => {
-            const fileFullPath = turnAbsolute(path.join(directoryPath, file));
-            readFile(fileFullPath);
-        });
-    } else {
-        console.log('La ruta no es un directorio.');
-    }
-} else {
-    console.log('La ruta no existe.');*/
+const processNextFile = (index) => {
+    if (index < mdFiles.length) {
+        const file = mdFiles[index];
+        const fileFullPath = turnAbsolute(path.join(directoryPath, file));
+
+        readFile(fileFullPath)
+            .then(fileContent => {
+                const linksInFile = extractLinks(fileContent, fileFullPath);
+                allLinks.push(...linksInFile);
+                processNextFile(index + 1);
+            })
+ 
+      console.log('Extracted links:', allLinks);
+ }
+};
+
+processNextFile(0);
+};
+
+console.log(exploreAndExtractLinks('./pruebas'));
+
+*/

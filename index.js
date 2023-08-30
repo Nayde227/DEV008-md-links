@@ -4,40 +4,47 @@ const { existsPath,
     isDirectory, 
     markdownFiles, 
     absolutePath,
-    turnAbsolute 
+    turnAbsolute, 
+    extractLinks,
+    
     } = require('./function');
 
 const mdLinks = (path, options) => {
 return new Promise((resolve, reject) => {
     if(existsPath(path)) {
         console.log(existsPath(path))
-        if (absolutePath(path)) {
-            console.log(turnAbsolute(path))
+        if (!absolutePath(path)) {
+            console.log('vuelvo absoluta', turnAbsolute(path))
         }
     } else {
         reject('La ruta no existe')
     }
  
     if(isDirectory(path)) {
-       console.log(isDirectory(path))
-        console.log(markdownFiles(path))
-        //console.log(readFile(path)) NO ME LEE ARCHIVOS DENTRO DE UN DIRECTORIO
+        console.log(extractLinks(fileContent, path))
+                
+            
+        
     } else {
         if(getFileExtension(path)){
-            console.log(getFileExtension(path))
-            console.log(readFile(path))
+            readFile(path).then((fileContent) => {
+               
+               console.log(extractLinks(fileContent, path)) 
+            })
+            
+             
          } else {
             reject('No es un archivo .md')
          }
         
     }
-
+    
     
 })
 
 
 }
-mdLinks('./README.md')
+mdLinks('pruebas/prueba1.md')
 .then((result) => {
     console.log(result)
 })
