@@ -154,7 +154,17 @@ describe('readFile', () => {
 
     expect(result).toEqual(expectedContent);
   });
-});
+
+  /*it('Debe rechazar si no es posible leer el archivo', async () => {
+    const expectedContent = 'No se pudo leer el archivo';
+    const filePath = 'pruebas/prueba.txt';
+
+    const resultPromise = readFile(filePath);
+    const result = await resultPromise;
+
+    expect(result).toEqual(expectedContent);
+  })SIGUE LEYENDO AUNQUE SEA .TXT*/
+}); 
 
 describe('extractLinks', () => {
   it('Debe extraer los links',  () => {

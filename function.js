@@ -1,5 +1,6 @@
 const axios = require('axios')
 const fs = require('fs');
+const { url } = require('inspector');
 const path = require('path');
 
 //validar si la ruta existe existe
@@ -74,9 +75,6 @@ const readFile = (filePath) => {
 
 
 
-
-
-
 //--------------------------- ExtractLinks and Stats-------------------
 
 // Función para extraer links
@@ -99,15 +97,34 @@ function extractLinks(fileContent, filePath) {
 
  //Petición HTTP 
 
-  /* function checkLink(link) {
-        return axios.head(link.url)
-        
-  .then(response => ({status:response.status}))
-  .catch(error => ({status: error.response})) 
-    }
-    console.log(checkLink('https://jsonplaceholder.typicode.com/posts'))
-*/
-  
+ //estatus de los links NECESITA LEERSE EN INDEX
+
+ const checkLink = (url) => {
+    axios.get(url)
+    .then((response) => {
+        console.log({ status: response.status}, 'Funciona')
+    })
+    .catch((err) => {
+        if (err.response) {
+            console.log({ status: err.response.status}, 'No funciona =(');
+        } 
+    });
+}
+ console.log(checkLink("https://jsonplaceholder.typicode.com/postsHOLA"))
+
+/* const validateLinks = (links) => {
+    const allLinks = links.map(checkLink);
+    return Promise.all(allLinks);
+}
+
+validateLinks(extractLinks)
+    .then((results) => {
+        console.log(results);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+  console.log(validateLinks("https://jsonplaceholder.typicode.com/posts"))*/
 
 module.exports = {
     existsPath,
@@ -118,7 +135,8 @@ module.exports = {
     absolutePath,
     turnAbsolute,
 
-    extractLinks
+    extractLinks,
+    checkLink
 }
 
 

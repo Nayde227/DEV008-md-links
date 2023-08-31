@@ -6,6 +6,7 @@ const { existsPath,
     absolutePath,
     turnAbsolute, 
     extractLinks,
+    checkLink
     
     } = require('./function');
 
@@ -29,7 +30,9 @@ return new Promise((resolve, reject) => {
         if(getFileExtension(path)){
             readFile(path).then((fileContent) => {
                
-               console.log(extractLinks(fileContent, path)) 
+               if(extractLinks(fileContent, path)) {
+                console.log(checkLink(extractLinks(fileContent, path)))/*NO FUNCIONA*/
+               }
             })
             
              
