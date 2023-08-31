@@ -31,6 +31,8 @@ const getFileExtension = (filePath) => {
 
 //filtrar los archivos md (Pedir ayuda para cambiar el argumento)
 
+
+
 const markdownFiles = (filePath) => readDir(filePath).filter(filePath => getFileExtension(filePath));
 // file => getFileExtension(file) devuelve true o false
 

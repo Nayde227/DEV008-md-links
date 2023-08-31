@@ -1,7 +1,7 @@
 
-const { mdLinks }  = require('../index.js');
-const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readDir } = require('../function.js')
-/*
+const { mdLinks } = require('../index.js');
+const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readFile, extractLinks } = require('../function.js')
+
 describe('mdLinks', () => {
 
   it('should...', () => {
@@ -24,43 +24,147 @@ describe('mdLinks', () => {
 
   
 });
-*/
-  
 
-  describe("Is a function", () => {
-    it("getFileExtension Es una función", () => {
-      expect(typeof getFileExtension).toBe("function");
-    });
 
-    it("markdowFiles Es una función", () => {
-      expect(typeof markdownFiles).toBe("function");
-    });
 
-    it("turnAbsolute Es una función", () => {
-      expect(typeof turnAbsolute).toBe("function");
-    });
+describe("Is a function", () => {
+  it("getFileExtension debe ser una función", () => {
+    expect(typeof getFileExtension).toBe("function");
+  });
 
-    it("absolutePath Es una función", () => {
-      expect(typeof absolutePath).toBe("function");
-    });
+  it("markdowFiles debe ser una función", () => {
+    expect(typeof markdownFiles).toBe("function");
+  });
 
-    it("isDirectory Es una función", () => {
-      expect(typeof isDirectory).toBe("function");
-    });
+  it("turnAbsolute debe ser una función", () => {
+    expect(typeof turnAbsolute).toBe("function");
+  });
 
-    it("existsPath", () => {
-      expect(typeof existsPath).toBe("function");
-    });
+  it("absolutePath debe ser una función", () => {
+    expect(typeof absolutePath).toBe("function");
+  });
 
+  it("isDirectory debe ser una función", () => {
+    expect(typeof isDirectory).toBe("function");
+  });
+
+  it("existsPath debe ser una función", () => {
+    expect(typeof existsPath).toBe("function");
+  });
+
+
+  it('readFile debe ser una función', () => {
+    expect(typeof readFile).toBe("function");
   })
 
-  /*
+  it('extractLinks debe ser una función', () => {
+    expect(typeof extractLinks).toBe("function");
+  })
+
+})
+
+
+describe('turnAbsolute', () => {
+
+  it('Debe transformar la ruta en absoluta', () => {
+    const filePath = './README.md'
+    const absolutePath = 'C:\\Users\\elmae\\OneDrive\\Desktop\\Laboratoria\\5. MD-Links\\DEV008-md-links\\README.md'
+    const result = turnAbsolute(filePath)
+
+    expect(result).toBe(absolutePath)
+  })
+})
+
 describe('getFileExtension', () => {
 
-  it('debe obtener la extensión de un arvchivo', () => {
-     getFileExtension('./README.md') => {
-      return expect(error).toBe(false)
-     }
-      
-    })
-  })*/
+  it('Debe dar true cuando el arvhivo es === .md', () => {
+    const filePath = './README.md'
+    const expectedExtension = true
+    const result = getFileExtension(filePath)
+
+    expect(result).toBe(expectedExtension)
+  })
+
+  it('Debe dar false cuando el archivo no es === .md', () => {
+    const filePath = './README.txt'
+    const expectedExtension = false
+    const result = getFileExtension(filePath)
+
+    expect(result).toBe(expectedExtension)
+  })
+})
+
+
+describe('isDirectory', () => {
+
+  it('Debe dar true cuando el arvhivo es directorio', () => {
+    const dirPath = './test'
+    const isDirectoryPath = true
+    const result = isDirectory(dirPath)
+
+    expect(result).toBe(isDirectoryPath)
+  })
+})
+
+describe('absolutePath', () => {
+
+  it('Debe obtener la ruta absoluta', () => {
+    const filePath = './README.md'
+    const getAbsolutePath = 'C:\\Users\\elmae\\OneDrive\\Desktop\\Laboratoria\\5. MD-Links\\DEV008-md-links\\README.md'
+    const result = absolutePath(filePath)
+
+    expect(result).toBe(getAbsolutePath)
+  })
+})
+
+describe('existsPath', () => {
+  it('Debe dar true cuando la ruta existe', () => {
+    const filePath = './pruebas'
+    const expectedPath = true
+    const result = existsPath(filePath)
+
+    expect(result).toBe(expectedPath)
+  })
+
+  it('Debe dar false cuando la ruta no existe', () => {
+    const filePath = './prues'
+    const expectedPath = false
+    const result = existsPath(filePath)
+
+    expect(result).toBe(expectedPath)
+  })
+})
+
+//Este no se muestra en los test
+/*describe('markDownFiles', () => {
+  const filePath = './pruebas'
+  const expected = ["prueba1.md", "prueba2.md"];
+  const result = markdownFiles(filePath);
+
+expect(result).toEqual(expected);
+})*/
+
+describe('readFile', () => {
+  it('Debe leer el contenido de mi archivo', async () => {
+    const expectedContent = '# Markdown Links';
+    const filePath = 'README.md';
+
+    const resultPromise = readFile(filePath);
+    const result = await resultPromise;
+
+    expect(result).toEqual(expectedContent);
+  });
+});
+
+describe('extractLinks', () => {
+  it('Debe extraer los links',  () => {
+    const expectedLinks = [];
+    const filePath = 'README.md';
+    const fileContent = '[Github](https://github.com/Nayde227/DEV008-md-links)'
+
+    const result = extractLinks(filePath, fileContent);
+
+    expect(result).toEqual(expectedLinks);
+  });
+});
+
