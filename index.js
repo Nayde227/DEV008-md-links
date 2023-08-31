@@ -44,7 +44,7 @@ return new Promise((resolve, reject) => {
 
 
 }
-mdLinks('./README.md')
+mdLinks('pruebas/prueba1.md')
 .then((result) => {
     console.log(result)
 })
