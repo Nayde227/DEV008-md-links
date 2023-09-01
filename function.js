@@ -99,32 +99,33 @@ function extractLinks(fileContent, filePath) {
 
  //estatus de los links NECESITA LEERSE EN INDEX
 
- const checkLink = (url) => {
-    axios.get(url)
-    .then((response) => {
-        console.log({ status: response.status}, 'Funciona')
-    })
-    .catch((err) => {
-        if (err.response) {
-            console.log({ status: err.response.status}, 'No funciona =(');
-        } 
-    });
-}
- console.log(checkLink("https://jsonplaceholder.typicode.com/postsHOLA"))
 
-/* const validateLinks = (links) => {
-    const allLinks = links.map(checkLink);
-    return Promise.all(allLinks);
-}
+ // Función para validar un enlace
+const checkLink = (url) => {
+    return axios.get(url)
+        .then((response) => {
+            console.log({ url, status: response.status, message: 'Ok' })
+            return ({ url, status: response.status, message: 'Ok' })
+        })
+        .catch((err) => {
+            if (err.response) {
+                console.log({ url, status: err.response.status, message: 'No funciona =(' })
+                return { url, status: err.response.status, message: 'No funciona =(' };
+            }
+        });
+} 
+//console.log(checkLink("https://jsonplaceholder.typicode.com/posts"))
 
-validateLinks(extractLinks)
-    .then((results) => {
-        console.log(results);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-  console.log(validateLinks("https://jsonplaceholder.typicode.com/posts"))*/
+// Función para validar todos los enlaces en el archivo
+const validateLinksInFile = (fileContent) => {
+    const urls = extractLinks(fileContent);
+    const linkPromises = urls.map(checkLink);
+    
+    return (Promise.all(linkPromises)) ;
+} 
+//console.log(validateLinksInFile('pruebas/prueba1.md'))
+
+
 
 module.exports = {
     existsPath,
@@ -136,7 +137,8 @@ module.exports = {
     turnAbsolute,
 
     extractLinks,
-    checkLink
+    checkLink,
+    validateLinksInFile
 }
 
 

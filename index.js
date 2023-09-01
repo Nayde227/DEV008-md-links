@@ -31,7 +31,8 @@ return new Promise((resolve, reject) => {
             readFile(path).then((fileContent) => {
                
                if(extractLinks(fileContent, path)) {
-                console.log(checkLink(extractLinks(fileContent, path)))/*NO FUNCIONA*/
+                console.log(extractLinks(fileContent, path))
+               // console.log(checkLink(extractLinks(fileContent, path)))/*NO FUNCIONA*/
                }
             })
             
