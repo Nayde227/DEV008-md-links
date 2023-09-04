@@ -84,46 +84,63 @@ function extractLinks(fileContent, filePath) {
     const linkRegex = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
     const links = [];
     let match;
-    //console.log(linkRegex.exec(fileContent)) para leer todas las coincidencias del array
+    //console.log(linkRegex.exec('')) // para leer todas las coincidencias del array
 
     while ((match = linkRegex.exec(fileContent)) !== null) {
 
         const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
         links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
     }
-
+    
     return links;
-}
+}  
 
- //Petición HTTP 
+//Petición HTTP 
 
- //estatus de los links NECESITA LEERSE EN INDEX
+//estatus de los links NECESITA LEERSE EN INDEX
 
 
- // Función para validar un enlace
+// Función para validar un enlace
 const checkLink = (url) => {
     return axios.get(url)
         .then((response) => {
-            console.log({ url, status: response.status, message: 'Ok' })
+            //console.log({ url, status: response.status, message: 'Ok' })
             return ({ url, status: response.status, message: 'Ok' })
         })
         .catch((err) => {
             if (err.response) {
-                console.log({ url, status: err.response.status, message: 'No funciona =(' })
+                // console.log({ url, status: err.response.status, message: 'No funciona =(' })
                 return { url, status: err.response.status, message: 'No funciona =(' };
             }
         });
-} 
-//console.log(checkLink("https://jsonplaceholder.typicode.com/posts"))
+}
+
+
+// checkLink("https://jsonplaceholder.typicode.com/postsHola")
+//     .then(response => {
+//         console.log(response);
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     });
+
 
 // Función para validar todos los enlaces en el archivo
-const validateLinksInFile = (fileContent) => {
-    const urls = extractLinks(fileContent);
-    const linkPromises = urls.map(checkLink);
-    
+const validateLinksInFile = (fileContent, filePath) => {
+    const linksInFile = extractLinks(fileContent, filePath);
+    const linkPromises = linksInFile.map(checkLink);
     return (Promise.all(linkPromises)) ;
 } 
-//console.log(validateLinksInFile('pruebas/prueba1.md'))
+
+validateLinksInFile('pruebas/prueba1.md')
+    .then(results => {
+        console.log(results)
+    })
+    .catch(error => {
+        console.error(error)
+    })
+
+// Funciones de estadísticas
 
 
 
@@ -142,34 +159,3 @@ module.exports = {
 }
 
 
-
-
-
-/*
-//Función recursiva para extraer links en directorio
-const exploreAndExtractLinks = (directoryPath) => {
-const mdFiles = markdownFiles(directoryPath);
-const allLinks = [];
-
-const processNextFile = (index) => {
-    if (index < mdFiles.length) {
-        const file = mdFiles[index];
-        const fileFullPath = turnAbsolute(path.join(directoryPath, file));
-
-        readFile(fileFullPath)
-            .then(fileContent => {
-                const linksInFile = extractLinks(fileContent, fileFullPath);
-                allLinks.push(...linksInFile);
-                processNextFile(index + 1);
-            })
- 
-      console.log('Extracted links:', allLinks);
- }
-};
-
-processNextFile(0);
-};
-
-console.log(exploreAndExtractLinks('./pruebas'));
-
-*/

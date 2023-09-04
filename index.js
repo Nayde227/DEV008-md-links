@@ -6,7 +6,8 @@ const { existsPath,
     absolutePath,
     turnAbsolute, 
     extractLinks,
-    checkLink
+    checkLink,
+    validateLinksInFile
     
     } = require('./function');
 
@@ -32,7 +33,15 @@ return new Promise((resolve, reject) => {
                
                if(extractLinks(fileContent, path)) {
                 console.log(extractLinks(fileContent, path))
-               // console.log(checkLink(extractLinks(fileContent, path)))/*NO FUNCIONA*/
+                
+                /*NO FUNCIONA*/
+    //             validateLinksInFile(path)
+    // .then(results => {
+    //     console.log(results)
+    // })
+    // .catch(error => {
+    //     console.error(error)
+    // })
                }
             })
             
@@ -48,7 +57,7 @@ return new Promise((resolve, reject) => {
 
 
 }
-mdLinks('pruebas/prueba1.md')
+mdLinks('pruebas/prueba2.md')
 .then((result) => {
     console.log(result)
 })
