@@ -111,12 +111,14 @@ const checkLink = (url) => {
             if (err.response) {
                 // console.log({ url, status: err.response.status, message: 'No funciona =(' })
                 return { url, status: err.response.status, message: 'No funciona =(' };
-            }
+            // } else {
+            //     return { url, status: 'error', message: err.message };
+             }
         });
 }
 
 
-// checkLink("https://jsonplaceholder.typicode.com/postsHola")
+// checkLink("https://jsonplaceholder.typicode.com/posts")
 //     .then(response => {
 //         console.log(response);
 //     })
@@ -126,19 +128,27 @@ const checkLink = (url) => {
 
 
 // Función para validar todos los enlaces en el archivo
+/*
 const validateLinksInFile = (fileContent, filePath) => {
-    const linksInFile = extractLinks(fileContent, filePath);
-    const linkPromises = linksInFile.map(checkLink);
-    return (Promise.all(linkPromises)) ;
+    const linksInFile = extractLinks(fileContent, filePath)
+    const linksPromise = linksInFile.map(checkLink)
+    return Promise.all(linksPromise)
+}*/
+const validateLinksInFile = (array) => {
+    
+    const linkPromises = array.map((items) => {
+        return checkLink(items.url)
+    });
+    return Promise.all(linkPromises) ;
 } 
 
-validateLinksInFile('pruebas/prueba1.md')
-    .then(results => {
-        console.log(results)
-    })
-    .catch(error => {
-        console.error(error)
-    })
+// validateLinksInFile('pruebas/prueba1.md')
+//     .then(results => {
+//         console.log(results)
+//     })
+//     .catch(error => {
+//         console.error(error)
+//     })
 
 // Funciones de estadísticas
 
