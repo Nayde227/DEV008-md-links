@@ -87,8 +87,9 @@ function extractLinks(fileContent, filePath) {
     //console.log(linkRegex.exec('')) // para leer todas las coincidencias del array
 
     while ((match = linkRegex.exec(fileContent)) !== null) {
-
-        const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
+        const linkText = match[1].slice(0, 49)
+        const url = match[2]
+        //const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
         links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
     }
     
@@ -101,18 +102,18 @@ function extractLinks(fileContent, filePath) {
 
 
 // Función para validar un enlace
-const checkLink = (url) => {
-    return axios.get(url)
+const checkLink = (link) => {
+    return axios.get(link.url)
         .then((response) => {
             //console.log({ url, status: response.status, message: 'Ok' })
-            return ({ url, status: response.status, message: 'Ok' })
+            return ({ link, status: response.status, message: 'Ok' })
         })
         .catch((err) => {
             if (err.response) {
                 // console.log({ url, status: err.response.status, message: 'No funciona =(' })
-                return { url, status: err.response.status, message: 'No funciona =(' };
-            // } else {
-            //     return { url, status: 'error', message: err.message };
+                return { link, status: err.response.status, message: 'No funciona =(' };
+             } else {
+               return { link, status: 'error', message: err.message };
              }
         });
 }
@@ -128,19 +129,21 @@ const checkLink = (url) => {
 
 
 // Función para validar todos los enlaces en el archivo
-/*
+
 const validateLinksInFile = (fileContent, filePath) => {
     const linksInFile = extractLinks(fileContent, filePath)
     const linksPromise = linksInFile.map(checkLink)
     return Promise.all(linksPromise)
-}*/
-const validateLinksInFile = (array) => {
+}
+
+
+// const validateLinksInFile = (array) => {
     
-    const linkPromises = array.map((items) => {
-        return checkLink(items.url)
-    });
-    return Promise.all(linkPromises) ;
-} 
+//     const linkPromises = array.map((items) => {
+//         return checkLink(items.url)
+//     });
+//     return Promise.all(linkPromises) ;
+// } 
 
 // validateLinksInFile('pruebas/prueba1.md')
 //     .then(results => {

@@ -30,10 +30,10 @@ const mdLinks = (path, options) => {
         } else {
             if (getFileExtension(path)) {
                 readFile(path).then((fileContent) => {
-
-                    if (extractLinks(fileContent, path)) {
-                        let array = extractLinks(fileContent, path)
-                        validateLinksInFile(array)
+                    const array = extractLinks(fileContent, path)
+                    if (array) {
+                        
+                        validateLinksInFile(fileContent, path)
 
                             .then(results => {
                                 console.log(results)
