@@ -89,7 +89,6 @@ function extractLinks(fileContent, filePath) {
     while ((match = linkRegex.exec(fileContent)) !== null) {
         const linkText = match[1].slice(0, 49)
         const url = match[2]
-        //const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
         links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
     }
 
@@ -98,22 +97,19 @@ function extractLinks(fileContent, filePath) {
 
 //Petición HTTP 
 
-//estatus de los links NECESITA LEERSE EN INDEX
-
-
-// Función para validar un enlace
+// Función para validar un enlace con su status
 const checkLink = (link) => {
     return axios.get(link.url)
         .then((response) => {
             //console.log({ url, status: response.status, message: 'Ok' })
-            return ({ link, status: response.status, message: 'Ok' })
+            return ({ ...link, status: response.status, message: 'Ok' })// ...link 
         })
         .catch((err) => {
             if (err.response) {
                 // console.log({ url, status: err.response.status, message: 'No funciona =(' })
-                return { link, status: err.response.status, message: 'No funciona =(' };
+                return { ...link, status: err.response.status, message: 'Error' };
             } else {
-                return { link, status: 'error', message: err.message };
+                return { ...link, status: 'Error', message: err.message };
             }
         });
 }
@@ -146,9 +142,25 @@ const validateLinksInFile = (fileContent, filePath) => {
 //         console.error(error)
 //     })
 
-// Funciones de estadísticas
+/* -----------------------Funciones de estadísticas-----------------------*/
 
+    const statsLinks = (links) => {
+       
+        return { 
+            Total: links.length,
+             Unique: new Set (links.map((link) => link.url)).size
+            }
+    }
 
+    const statsBrokenLinks = (links) => {
+        const brokenLinks = links.filter((link) => link.message !== 'Ok')
+        return {
+            Total: links.length,
+            Unique: new Set(links.map((link) => link.url)).size,
+            Broken: brokenLinks.length
+        }
+    }
+    
 
 module.exports = {
     existsPath,
@@ -159,7 +171,10 @@ module.exports = {
     absolutePath,
     turnAbsolute,
     extractLinks,
-    validateLinksInFile
+    checkLink,
+    validateLinksInFile,
+    statsLinks,
+    statsBrokenLinks
 }
 
 

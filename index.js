@@ -6,11 +6,13 @@ const { existsPath,
     absolutePath,
     turnAbsolute,
     extractLinks,
-    validateLinksInFile
+    validateLinksInFile,
+    statsLinks,
+    statsBrokenLinks
 
 } = require('./function');
 
-const mdLinks = (path, options) => {
+const mdLinks = (path, options = { stats: false, validate: false }) => {
     return new Promise((resolve, reject) => {
         if (existsPath(path)) {
             console.log(existsPath(path))
@@ -21,41 +23,43 @@ const mdLinks = (path, options) => {
             reject('La ruta no existe')
         }
 
-        if (isDirectory(path)) {
-            console.log(extractLinks(fileContent, path))
+        if (getFileExtension(path)) {
+            readFile(path).then((fileContent) => {
+                const arrayLinks = extractLinks(fileContent, path)
+                if (arrayLinks) {
 
+                    validateLinksInFile(fileContent, path)
+
+                        .then((results) => {
+                            if (options && options.stats) {
+                                if (options.validate) {
+                                    return resolve({ links: results, stats: statsBrokenLinks(results) })
+                                } else {
+                                    return resolve({ links: results, stats: statsLinks(results) })
+                                }
+                            } return resolve({ links: results })
+
+                        })
+                        .catch(error => {
+                            console.error(error)
+                        })
+
+                }
+            })
 
 
         } else {
-            if (getFileExtension(path)) {
-                readFile(path).then((fileContent) => {
-                    const array = extractLinks(fileContent, path)
-                    if (array) {
-                        
-                        validateLinksInFile(fileContent, path)
-
-                            .then(results => {
-                                console.log(results)
-                            })
-                            .catch(error => {
-                                console.error(error)
-                            })
-                    }
-                })
-
-
-            } else {
-                reject('No es un archivo .md')
-            }
-
+            reject('No es un archivo .md')
         }
 
+    }
 
-    })
+
+    )
 
 
 }
-mdLinks('pruebas/prueba2.md')
+mdLinks('pruebas/prueba1.md', { validate: true, stats: true })
     .then((result) => {
         console.log(result)
     })
