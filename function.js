@@ -92,9 +92,9 @@ function extractLinks(fileContent, filePath) {
         //const [, linkText, url] = match; //destructuración (obtiene los indices que necesito del array)
         links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
     }
-    
+
     return links;
-}  
+}
 
 //Petición HTTP 
 
@@ -112,9 +112,9 @@ const checkLink = (link) => {
             if (err.response) {
                 // console.log({ url, status: err.response.status, message: 'No funciona =(' })
                 return { link, status: err.response.status, message: 'No funciona =(' };
-             } else {
-               return { link, status: 'error', message: err.message };
-             }
+            } else {
+                return { link, status: 'error', message: err.message };
+            }
         });
 }
 
@@ -137,13 +137,6 @@ const validateLinksInFile = (fileContent, filePath) => {
 }
 
 
-// const validateLinksInFile = (array) => {
-    
-//     const linkPromises = array.map((items) => {
-//         return checkLink(items.url)
-//     });
-//     return Promise.all(linkPromises) ;
-// } 
 
 // validateLinksInFile('pruebas/prueba1.md')
 //     .then(results => {
@@ -165,9 +158,7 @@ module.exports = {
     markdownFiles,
     absolutePath,
     turnAbsolute,
-
     extractLinks,
-    checkLink,
     validateLinksInFile
 }
 

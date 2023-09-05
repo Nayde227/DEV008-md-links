@@ -6,7 +6,6 @@ const { existsPath,
     absolutePath,
     turnAbsolute,
     extractLinks,
-    checkLink,
     validateLinksInFile
 
 } = require('./function');

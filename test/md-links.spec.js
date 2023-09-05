@@ -1,6 +1,6 @@
 
 const { mdLinks } = require('../index.js');
-const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readFile, extractLinks } = require('../function.js')
+const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readFile, extractLinks, checkLink, validateLinksInFile } = require('../function.js')
 
 describe('mdLinks', () => {
 
@@ -59,6 +59,14 @@ describe("Is a function", () => {
 
   it('extractLinks debe ser una función', () => {
     expect(typeof extractLinks).toBe("function");
+  })
+
+  it('checkLinks debe ser una función', () => {
+    expect(typeof checkLink).toBe("function");
+  })
+
+  it('validateLinksInFile debe ser una función', () => {
+    expect(typeof validateLinksInFile).toBe("function");
   })
 
 })
