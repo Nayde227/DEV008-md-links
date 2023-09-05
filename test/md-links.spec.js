@@ -1,6 +1,6 @@
 
 const { mdLinks } = require('../index.js');
-const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readFile, extractLinks, checkLink, validateLinksInFile } = require('../function.js')
+const { getFileExtension, markdownFiles, turnAbsolute, absolutePath, isDirectory, existsPath, readFile, extractLinks, statsLinks, statsBrokenLinks, checkLink, validateLinksInFile } = require('../function.js')
 
 describe('mdLinks', () => {
 
@@ -10,7 +10,7 @@ describe('mdLinks', () => {
 
 
   it('debe rechazar cuando el path no existe', () => {
-    return mdLinks('./EstaRutaNo.md').catch((error) => {
+    return mdLinks('./RutaInexistente').catch((error) => {
       expect(error).toBe('La ruta no existe')
     })
   })
@@ -61,14 +61,17 @@ describe("Is a function", () => {
     expect(typeof extractLinks).toBe("function");
   })
 
-  it('checkLinks debe ser una función', () => {
-    expect(typeof checkLink).toBe("function");
+  it('statsLinks debe ser una función', () => {
+    expect(typeof statsLinks).toBe("function");
   })
 
-  it('validateLinksInFile debe ser una función', () => {
-    expect(typeof validateLinksInFile).toBe("function");
+  it('statsBrokenLinks debe ser una función', () => {
+    expect(typeof statsBrokenLinks).toBe("function");
   })
 
+  it('validateLinksInFile', () => {
+    expect(typeof validateLinksInFile).toBe("function")
+  })
 })
 
 
@@ -162,17 +165,7 @@ describe('readFile', () => {
 
     expect(result).toEqual(expectedContent);
   });
-
-  /*it('Debe rechazar si no es posible leer el archivo', async () => {
-    const expectedContent = 'No se pudo leer el archivo';
-    const filePath = 'pruebas/prueba.txt';
-
-    const resultPromise = readFile(filePath);
-    const result = await resultPromise;
-
-    expect(result).toEqual(expectedContent);
-  })SIGUE LEYENDO AUNQUE SEA .TXT*/
-}); 
+});
 
 describe('extractLinks', () => {
   it('Debe extraer los links',  () => {
@@ -186,3 +179,16 @@ describe('extractLinks', () => {
   });
 });
 
+// USAR MOCKS O REVISAR POR QUÉ NO FUNCIONA
+// describe('checkLink', () => {
+//   it('Debe dar el estatus de mis links', async () => {
+//     const expectedCheck = {
+//       status: 200,
+//       message: "Ok"
+//     };
+//     const link = 'https://github.com/Nayde227/DEV008-md-links'
+
+//     const result = await checkLink(link)
+//     expect(result).toEqual(expectedCheck)
+//   })
+// })

@@ -62,10 +62,10 @@ const readFile = (filePath) => {
     return new Promise((resolve, reject) => {
         fs.readFile(filePath, 'utf-8', (err, data) => {
             if (err) {
-                console.log('No se pudo leer el archivo');
-                reject(err)
+                //console.log('No se pudo leer el archivo');
+                reject(err, 'No se pudo leer el archivo')
             } else {
-                console.log('readFile', data); // Imprime el contenido del archivo leído
+                //console.log('readFile', data); // Imprime el contenido del archivo leído
                 resolve(data)
             }
         });
