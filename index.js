@@ -59,13 +59,14 @@ const mdLinks = (path, options = { stats: false, validate: false }) => {
 
 
 }
-mdLinks('pruebas/prueba1.md', { validate: true, stats: true })
-    .then((result) => {
-        console.log(result)
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+// mdLinks('pruebas/prueba1.md', { validate: true, stats: true })
+//     .then((result) => {
+//         console.log(result)
+//     })
+//     .catch((err) => {
+//         console.log(err)
+//     })
+
 module.exports = {
     mdLinks
 }
