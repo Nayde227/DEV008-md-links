@@ -12,7 +12,7 @@ const { existsPath,
 
 } = require('./function');
 
-const mdLinks = (path, options = { stats: false, validate: false }) => {
+const mdLinks = (path, options) => {
     return new Promise((resolve, reject) => {
         if (existsPath(path)) {
             console.log(existsPath(path))
@@ -31,13 +31,15 @@ const mdLinks = (path, options = { stats: false, validate: false }) => {
                     validateLinksInFile(fileContent, path)
 
                         .then((results) => {
-                            if (options && options.stats) {
-                                if (options.validate) {
-                                    return resolve({ links: results, stats: statsBrokenLinks(results) })
-                                } else {
-                                    return resolve({ links: results, stats: statsLinks(results) })
-                                }
-                            } return resolve({ links: results })
+                            if (options.validate === true && options.stats === false) {
+                                return resolve({ links: results })
+                            } else if (options.validate === false && options.stats === true) {
+                                return resolve({ stats: statsBrokenLinks(results) })
+                            } else if (options.validate === true && options.stats === true) {
+                                return resolve({ links: results, stats: statsBrokenLinks(results) })
+                            }
+                            
+                            return resolve (extractLinks(fileContent, path))
 
                         })
                         .catch(error => {
