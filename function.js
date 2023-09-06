@@ -87,7 +87,7 @@ function extractLinks(fileContent, filePath) {
     //console.log(linkRegex.exec('')) // para leer todas las coincidencias del array
 
     while ((match = linkRegex.exec(fileContent)) !== null) {
-        const linkText = match[1].slice(0, 49)
+        const linkText = match[1].slice(0, 30)
         const url = match[2]
         links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
     }
