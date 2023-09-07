@@ -27,33 +27,20 @@ const readDir = (filePath) => {
 const getFileExtension = (filePath) => {
     return path.extname(filePath) === '.md'
 }
-// console.log(getFileExtension('./thumb.png'))
-
-
-//filtrar los archivos md (Pedir ayuda para cambiar el argumento)
-
-
 
 const markdownFiles = (filePath) => readDir(filePath).filter(filePath => getFileExtension(filePath));
-// file => getFileExtension(file) devuelve true o false
-
-//console.log(markdownFiles('./pruebas'))
 
 
 //Unir dos segmentos de rutas 
 
 const routes = (filePath) => path.join(filePath);
 
-//obtener ruta absoluta
 
 const absolutePath = (filePath) => path.resolve(filePath);
 
 
-// transformar ruta relativa en absoluta 
 
 const turnAbsolute = (filePath) => absolutePath(routes(filePath));
-
-//console.log(turnAbsolute('./pruebas'))
 
 
 //Función para leer el archivo
@@ -84,12 +71,11 @@ function extractLinks(fileContent, filePath) {
     const linkRegex = /\[([^\]]+)\]\((http[s]?:\/\/[^\)]+)\)/g;
     const links = [];
     let match;
-    //console.log(linkRegex.exec('')) // para leer todas las coincidencias del array
 
     while ((match = linkRegex.exec(fileContent)) !== null) {
         const linkText = match[1].slice(0, 30)
         const url = match[2]
-        links.push({ text: linkText, url: url, file: filePath }); //(agrega un objeto al array links)
+        links.push({ text: linkText, url: url, file: filePath }); 
     }
 
     return links;
@@ -101,27 +87,18 @@ function extractLinks(fileContent, filePath) {
 const checkLink = (link) => {
     return axios.get(link.url)
         .then((response) => {
-            //console.log({ url, status: response.status, message: 'Ok' })
+            
             return ({ ...link, status: response.status, message: 'Ok' })// ...link 
         })
         .catch((err) => {
             if (err.response) {
-                // console.log({ url, status: err.response.status, message: 'No funciona =(' })
-                return { ...link, status: err.response.status, message: 'Error' };
+                
+                return { ...link, status: err.response.status, message: 'fail' };
             } else {
                 return { ...link, status: 'Error', message: err.message };
             }
         });
 }
-
-
-// checkLink("https://jsonplaceholder.typicode.com/posts")
-//     .then(response => {
-//         console.log(response);
-//     })
-//     .catch(err => {
-//         console.error(err);
-//     });
 
 
 // Función para validar todos los enlaces en el archivo
@@ -132,15 +109,6 @@ const validateLinksInFile = (fileContent, filePath) => {
     return Promise.all(linksPromise)
 }
 
-
-
-// validateLinksInFile('pruebas/prueba1.md')
-//     .then(results => {
-//         console.log(results)
-//     })
-//     .catch(error => {
-//         console.error(error)
-//     })
 
 /* -----------------------Funciones de estadísticas-----------------------*/
 

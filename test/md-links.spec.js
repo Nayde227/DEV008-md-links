@@ -14,15 +14,19 @@ describe('mdLinks', () => {
       expect(error).toBe('La ruta no existe')
     })
   })
-  
-  
+
+
   it('debe rechazar cuando no es un archivo .md', () => {
     return mdLinks('pruebas/prueba.txt').catch((error) => {
       expect(error).toBe('No es un archivo .md')
     })
   })
 
-  
+  it('debe devolver una promesa', () => {
+
+    expect(mdLinks("pruebas/prueba1.md", {})).toBeInstanceOf(Promise);
+  })
+
 });
 
 
@@ -72,6 +76,7 @@ describe("Is a function", () => {
   it('validateLinksInFile', () => {
     expect(typeof validateLinksInFile).toBe("function")
   })
+
 })
 
 
@@ -146,29 +151,37 @@ describe('existsPath', () => {
   })
 })
 
-//Este no se muestra en los test
-/*describe('markDownFiles', () => {
-  const filePath = './pruebas'
-  const expected = ["prueba1.md", "prueba2.md"];
-  const result = markdownFiles(filePath);
 
-expect(result).toEqual(expected);
-})*/
+describe('markDownFiles', () => {
+  it('Debe devovler true si el path es markdown', () => {
+    const expectedPath = true
+    filePath = 'pruebas/prueba1.md'
+    const result = existsPath(filePath)
+    expect(result).toBe(expectedPath)
+  })
+})
 
 describe('readFile', () => {
   it('Debe leer el contenido de mi archivo', async () => {
-    const expectedContent = '# Markdown Links';
-    const filePath = 'README.md';
+    const expectedContent = 'HOLA MUNDO 2';
+
+    const filePath = 'pruebas/prueba2.md';
 
     const resultPromise = readFile(filePath);
     const result = await resultPromise;
 
     expect(result).toEqual(expectedContent);
   });
+
+  it("debe devolver una promesa", () => {
+    const filePath = 'pruebas/prueba2.md';
+    const result = readFile(filePath);
+    expect(result).toBeInstanceOf(Promise);
+  });
 });
 
 describe('extractLinks', () => {
-  it('Debe extraer los links',  () => {
+  it('Debe extraer los links', () => {
     const expectedLinks = [];
     const filePath = 'README.md';
     const fileContent = '[Github](https://github.com/Nayde227/DEV008-md-links)'
@@ -179,16 +192,11 @@ describe('extractLinks', () => {
   });
 });
 
-// USAR MOCKS O REVISAR POR QUÉ NO FUNCIONA
-// describe('checkLink', () => {
-//   it('Debe dar el estatus de mis links', async () => {
-//     const expectedCheck = {
-//       status: 200,
-//       message: "Ok"
-//     };
-//     const link = 'https://github.com/Nayde227/DEV008-md-links'
-
-//     const result = await checkLink(link)
-//     expect(result).toEqual(expectedCheck)
-//   })
-// })
+describe('validateLinksInFile', () => {
+  it('Debe devovler promesas' , () => {
+    
+    filePath = 'pruebas/prueba1.md'
+    const result = validateLinksInFile(filePath)
+    expect(result).toBeInstanceOf(Promise)
+  })
+})
