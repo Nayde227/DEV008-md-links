@@ -1,8 +1,6 @@
 const { existsPath,
     readFile,
     getFileExtension,
-    isDirectory,
-    markdownFiles,
     absolutePath,
     turnAbsolute,
     extractLinks,
@@ -16,8 +14,8 @@ const mdLinks = (path, options) => {
     return new Promise((resolve, reject) => {
         if (existsPath(path)) {
             console.log(existsPath(path))
-            if (absolutePath(path)) {
-                console.log('vuelvo absoluta', turnAbsolute(path))
+            if (!absolutePath(path)) {
+                turnAbsolute(path)
             }
         } else {
             reject('La ruta no existe')
@@ -25,25 +23,25 @@ const mdLinks = (path, options) => {
 
         if (getFileExtension(path)) {
             readFile(path).then((fileContent) => {
-                const arrayLinks = extractLinks(fileContent, path)
+                const arrayLinks = extractLinks(fileContent, turnAbsolute(path))
                 if (arrayLinks) {
 
-                    validateLinksInFile(fileContent, path)
+                    validateLinksInFile(fileContent, turnAbsolute(path))
 
                         .then((results) => {
                             if (options.validate === true && options.stats === false) {
                                 return resolve({ links: results })
                             } else if (options.validate === false && options.stats === true) {
-                                return resolve({ stats: statsBrokenLinks(results) })
+                                return resolve({ stats: statsLinks(results) })
                             } else if (options.validate === true && options.stats === true) {
                                 return resolve({ links: results, stats: statsBrokenLinks(results) })
                             }
-                            
-                            return resolve (extractLinks(fileContent, path))
+
+                            return resolve(extractLinks(fileContent, turnAbsolute(path)))
 
                         })
                         .catch(error => {
-                            console.error(error)
+                            reject(error)
                         })
 
                 }
@@ -61,13 +59,6 @@ const mdLinks = (path, options) => {
 
 
 }
-// mdLinks('pruebas/prueba1.md', { validate: true, stats: true })
-//     .then((result) => {
-//         console.log(result)
-//     })
-//     .catch((err) => {
-//         console.log(err)
-//     })
 
 module.exports = {
     mdLinks
